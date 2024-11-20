@@ -14,9 +14,7 @@ class RDR:
       return None
     
     if (query.type == "ask"):
-      result = None
-      result = self.get_result(query)
-      return None
+      return self.get_result(query)
     
     else: # query.type == "add"
       self.add_node(query)
