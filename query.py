@@ -29,7 +29,7 @@ class Query:
         self.conditions = input.split(">")[0].split(",")
         self.conditions = [condition.strip() for condition in self.conditions]
         self.result = input.split(">")[1].strip()
-        assert self.result is not None
+        assert self.result is not None, "None result value"
 
       else:
         raise ValueError("Invalid string pattern")

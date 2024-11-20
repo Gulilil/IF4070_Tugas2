@@ -14,8 +14,32 @@ class RDR:
       return None
     
     if (query.type == "ask"):
-      # TO DO
-      return
+      result = None
+      result = self.get_result(query)
+      return None
+    
     else: # query.type == "add"
-      # TO DO 
-      return None # add does not return anything
+      self.add_node(query)
+    
+  def add_node(self, query: Query):
+    conditions = query.conditions
+    result = query.result
+    new_node = Node(conditions, result)
+
+    # TO DO
+    # recursive to add node
+    # terminate/ base condition => (node.check_rule() and node.next_node is None) or (not node.check_rule() and node.false_node is None)
+
+
+  def get_result(self, query: Query) -> str | None :
+    conditions = query.conditions
+
+    # TO DO 
+    # recursive to return 
+    # terminate/ base condition => (node.check_rule() and node.next_node is None) or (not node.check_rule() and node.false_node is None)
+    # only update the return result if not None
+    # if true -> get node.rule_result as result and then traverse to node.next_node
+    # else -> traverse to node.false_node
+    
+
+

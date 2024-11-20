@@ -1,8 +1,8 @@
 
 class Node:
-  def __init__ (self):
-    self.rule_conditions = []
-    self.rule_result = None
+  def __init__ (self, conditions : list = [], result : str = None):
+    self.rule_conditions = conditions
+    self.rule_result = result
     self.next_node = None
     self.false_node = None
 
