@@ -36,7 +36,7 @@ class RDR:
     # recursive to return 
     # terminate/ base condition => (node.check_rule() and node.next_node is None) or (not node.check_rule() and node.false_node is None)
     # only update the return result if not None
-    # if true -> get node.rule_result as result and then traverse to node.next_node
+    # if node.check_rule() true -> get node.rule_result as result and then traverse to node.next_node
     # else -> traverse to node.false_node
     
 
