@@ -1,0 +1,4 @@
+['a'] -> b
+  |- false node: ['b'] -> c
+  |  |- next node: [] -> r
+  |  |- false node: ['pein'] -> dje

@@ -55,3 +55,19 @@ class Node:
     if self.false_node != None:
       print(f"{prefix}- false node: ", end="")
       self.false_node.print_subtree(prefix)
+      
+  def save_subtree(self, file, prefix: str = ""):
+      # Write the current node's details
+      file.write(f"{self.rule_conditions} -> {self.rule_result}\n")
+      
+      # Update the prefix for child nodes
+      child_prefix = prefix + "  |"
+      if self.next_node is not None:
+          # Write the "next node" label and recursively save the next node
+          file.write(f"{child_prefix}- next node: ")
+          self.next_node.save_subtree(file, child_prefix)
+      
+      if self.false_node is not None:
+          # Write the "false node" label and recursively save the false node
+          file.write(f"{child_prefix}- false node: ")
+          self.false_node.save_subtree(file, child_prefix)

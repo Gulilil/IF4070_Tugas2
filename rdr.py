@@ -43,3 +43,11 @@ class RDR:
       print("Tree is empty")
     else:
       self.tree.print_subtree("")
+      
+  def save_tree(self, filename: str):
+      if self.tree is None:
+          print("Tree is empty")
+      else:
+          print(f"Saving tree to {filename}.txt")
+          with open(filename + ".txt", "w") as file:
+              self.tree.save_subtree(file)
