@@ -17,27 +17,29 @@ class RDR:
       return self.get_result(query)
     
     else: # query.type == "add"
-      self.add_node(query)
+      self.add_rule(query)
     
-  def add_node(self, query: Query):
+  def add_rule(self, query: Query):
     conditions = query.conditions
     result = query.result
-    new_node = Node(conditions, result)
 
-    # TO DO
-    # recursive to add node
-    # terminate/ base condition => (node.check_rule() and node.next_node is None) or (not node.check_rule() and node.false_node is None)
-
+    if self.tree is None:
+      self.tree = Node(conditions, result)
+    else:
+      self.tree.add_node(conditions, result)
 
   def get_result(self, query: Query) -> str | None :
     conditions = query.conditions
+    result = "Not mapped"
 
-    # TO DO 
-    # recursive to return 
-    # terminate/ base condition => (node.check_rule() and node.next_node is None) or (not node.check_rule() and node.false_node is None)
-    # only update the return result if not None
-    # if node.check_rule() true -> get node.rule_result as result and then traverse to node.next_node
-    # else -> traverse to node.false_node
-    
+    if self.tree is None:
+      print("Tree is empty")
+    else:
+      result = self.tree.get_final_result(conditions, result)
+    return result
 
-
+  def print_tree(self):
+    if self.tree is None:
+      print("Tree is empty")
+    else:
+      self.tree.print_subtree("")
