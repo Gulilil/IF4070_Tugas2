@@ -12,6 +12,9 @@ if __name__ == "__main__":
     "word1, word2 > result",
     "123, test_1 > final_output",
     "hello world > goodbye",
+    " , hehe > hasil",
+    ' > hasil 2',
+    " ? ",
     'hehe'
   ]
   
