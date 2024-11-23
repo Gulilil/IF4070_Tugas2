@@ -19,3 +19,39 @@ class Node:
     print(f"Next Node : {self.next_node is not None}")
     print(f"False Node : {self.false_node is not None}")
 
+  def get_final_result(self, conditions: list, newest_result: str):
+    if self.check_rule(conditions):
+      remaining_cond = [cond for cond in conditions if cond not in self.rule_conditions]
+      newest_result = self.rule_result
+      if self.next_node is not None:
+        return self.next_node.get_final_result(remaining_cond, newest_result)
+    else:
+      if self.false_node is not None:
+        return self.false_node.get_final_result(conditions, newest_result)
+    
+    return newest_result
+
+  def add_node(self, conditions: list, result: str):
+    if self.check_rule(conditions):
+      remaining_cond = [cond for cond in conditions if cond not in self.rule_conditions]
+      if self.next_node is None:
+        self.next_node = Node(remaining_cond, result)
+      else:
+        self.next_node.add_node(remaining_cond, result)
+    else:
+      if self.false_node is None:
+        self.false_node = Node(conditions, result)
+      else:
+        self.false_node.add_node(conditions, result)
+
+  def print_subtree(self, prefix : str = ""):
+    print(f"{self.rule_conditions} -> {self.rule_result}")
+    
+    prefix = prefix + "  |"
+    if self.next_node != None:
+      print(f"{prefix}- next node: ", end="")
+      self.next_node.print_subtree(prefix)
+    
+    if self.false_node != None:
+      print(f"{prefix}- false node: ", end="")
+      self.false_node.print_subtree(prefix)
