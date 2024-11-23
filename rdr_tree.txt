@@ -1,4 +1,6 @@
-['a'] -> b
-  |- false node: ['b'] -> c
-  |  |- next node: [] -> r
-  |  |- false node: ['pein'] -> dje
+['a'] -> a
+  |- next node: [] -> cc
+  |  |- next node: [] -> bb
+  |- false node: ['aa'] -> aa
+  |  |- false node: ['bb'] -> bb
+  |  |  |- false node: ['cc'] -> cc
