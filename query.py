@@ -35,8 +35,17 @@ class Query:
         raise ValueError("Invalid string pattern")
       
     except Exception as e:
-      print(f"[ERROR] Error in parsing the input {input} : {e}")
+      raise ValueError(f"[ERROR] Error in parsing the input {input} : {e}")
 
+  @classmethod
+  def from_properties(cls, type: str, conditions: list, result: str | None = None):
+    """Alternative constructor to initialize properties directly."""
+    obj = cls.__new__(cls)
+    obj.type = type
+    obj.conditions = conditions
+    obj.result = result
+    return obj
+  
   def is_valid(self):
     return 'type' in self.__dict__
 
