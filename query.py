@@ -15,7 +15,7 @@ class Query:
     try:
       assert "?" in input or ">" in input
       ask_pattern = r'^([\w\s]+(,\s?[\w\s]+)*)\?$'
-      add_pattern = r'^([\w\s]+(,\s?[\w\s]+)*)\s?>\s?[\w\s]+$'
+      add_pattern = r'^([\w\s]*(,\s?[\w\s]+)*)\s?>\s?[\w\s]+$'
       input = input.strip()
 
       if (bool(re.match(ask_pattern, input))):
@@ -27,7 +27,7 @@ class Query:
       elif (bool(re.match(add_pattern, input))):
         self.type = "add"
         self.conditions = input.split(">")[0].split(",")
-        self.conditions = [condition.strip() for condition in self.conditions]
+        self.conditions = [condition.strip() for condition in self.conditions if len(condition) > 0]
         self.result = input.split(">")[1].strip()
         assert self.result is not None, "None result value"
 
@@ -35,7 +35,7 @@ class Query:
         raise ValueError("Invalid string pattern")
       
     except Exception as e:
-      raise ValueError(f"[ERROR] Error in parsing the input {input} : {e}")
+      print(f"[ERROR] Error in parsing the input {input} : {e}")
 
   @classmethod
   def from_properties(cls, type: str, conditions: list, result: str | None = None):
