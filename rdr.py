@@ -1,5 +1,6 @@
 from query import Query
 from node import Node
+import re
 
 class RDR:
   tree : Node | None
@@ -57,80 +58,56 @@ class RDR:
     print(f"\nLoading tree from {filename}.txt\n")
     with open(filename + ".txt", "r") as file:
         lines = file.readlines()  # Read all lines
-        self.tree = self._load_subtree(lines, 0)[0]
+        self.tree = self.load_subtree(lines, 0, len(lines), 0)
 
-    """
-    Load the subtree from the file, for example condition of subtree:
-      TRUE -> b (basis level 0, conditions: TRUE/"", result: b)
-    |- next node: TRUE -> c (next node level 1, conditions: TRUE/"", result: c)
-    |  |- next node: ['a'] -> c (next node level 2, conditions: a, result: c)
-    |  |  |- false node: ['c'] -> d (false node level 3, conditions: c, result: d)
-    |  |  |  |- next node: ['b'] -> d (next node level 4, conditions: b, result: d)
-    |  |  |  |- false node: ['d'] -> a (false node level 4, conditions: d, result: a)
-    |  |  |  |  |- false node: TRUE -> a (false node level 5, conditions: TRUE/"", result a)
-    |  |  |  |  |  |- next node: ['b'] -> e (false node level 6, conditions: b, result: e)
-    """
+  def load_subtree(self, lines: list[str], start_index: int, end_index: int, depth: int) -> tuple[Node, int]:
+    # Extract the current line and determine the level of indentation
+    current_line = lines[start_index]
+
+    # Remove unnecessary substr
+    list_to_replace = ["|-", "|", "next node:", "false node:"]
+    for str_to_replace in list_to_replace:
+        current_line = current_line.replace(str_to_replace, "")
+    current_line = current_line.strip()
     
-  def _load_subtree(self, lines: list[str], index: int) -> tuple[Node, int]:
-      # Extract the current line and determine the level of indentation
-      current_line = lines[index].strip()
-      prefix_level = len(lines[index]) - len(current_line)
-      
-      # Debug: print the current line and prefix level
-      print(f"Parsing line: '{current_line}', Prefix level: {prefix_level}")
-      
-      # Extract conditions and result from the line
-      rule_conditions_str, rule_result = current_line.split("->")
-      rule_conditions_str = rule_conditions_str.strip()
-      rule_result = rule_result.strip()
-      
-      # Debug: print extracted conditions and result
-      print(f"Conditions: {rule_conditions_str}, Result: {rule_result}")
-      
-      # Parse the rule conditions
-      if rule_conditions_str == "TRUE":
-          rule_conditions = []
-      else:
-          # Convert conditions string to list
-          try:
-              rule_conditions = re.findall(r"'(.*?)'", rule_conditions_str)
-              # Debug: print the parsed conditions
-              print(f"Parsed conditions: {rule_conditions}")
-          except Exception as e:
-              print(f"Error parsing conditions: {e}")
-              rule_conditions = []
-      
-      # Create the current node
-      current_node = Node(rule_conditions, rule_result)
-      print(f"Created Node with Conditions: {rule_conditions}, Result: {rule_result}")
-      
-      # Move to the next line
-      index += 1
-      
-      # Parse child nodes
-      while index < len(lines):
-          next_line = lines[index].strip()
-          prefix_count = len(lines[index]) - len(next_line)
-          
-          # Debug: print the next line and prefix count
-          print(f"Parsing next line: '{next_line}', Prefix count: {prefix_count}")
+    # Extract conditions and result from the line
+    rule_conditions_str, rule_result = current_line.split("->")
+    rule_conditions_str = rule_conditions_str.strip()
+    rule_result = rule_result.strip()
 
-          # If prefix count is 0, we have reached the same or higher level (end of current subtree)
-          if prefix_count <= prefix_level:
-              break
+    if rule_conditions_str == "TRUE":
+        rule_conditions = []
+    else:
+        # Convert conditions string to list
+        try:
+            rule_conditions = re.findall(r"'(.*?)'", rule_conditions_str)
+            # Debug: print the parsed conditions
+        except Exception as e:
+            rule_conditions = []
 
-          # If prefix count is greater than the current prefix level, determine next node or false node
-          if "next node:" in next_line:
-              print(f"Parsing next node")
-              current_node.next_node, index = self._load_subtree(lines, index)
-          elif "false node:" in next_line:
-              print(f"Parsing false node")
-              current_node.false_node, index = self._load_subtree(lines, index)
-          else:
-              print(f"Line does not match expected 'next node' or 'false node', breaking")
-              break
+    current_node = Node(rule_conditions, rule_result)
 
-      # Debug: print the returning node
-      print(f"Returning node with Conditions: {current_node.rule_conditions}, Result: {current_node.rule_result}")
+    next_depth = depth + 1
+    next_node_index_range = [None, None]
+    false_node_index_range = [None, None]
+  
+    # Search for children node
+    for i in range(start_index, end_index):
+      line = lines[i]
+      if (line.count("|") == next_depth):
+          if ("next node:" in line):
+            next_node_index_range[0] = i
+          elif ("false node:" in line):
+            false_node_index_range[0] = i
+
+    if (next_node_index_range[0] is not None):
+      next_node_index_range[1] = false_node_index_range[0] if (false_node_index_range[0] is not None) else end_index
+      current_node.next_node = self.load_subtree(lines, next_node_index_range[0], next_node_index_range[1], next_depth)
+    if (false_node_index_range[0] is not None):
+      false_node_index_range[1] = end_index 
+      current_node.false_node = self.load_subtree(lines, false_node_index_range[0], false_node_index_range[1], next_depth)
+    
+    return current_node
+
       
-      return current_node, index
+
