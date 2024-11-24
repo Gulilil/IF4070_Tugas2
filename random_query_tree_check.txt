@@ -1,0 +1,100 @@
+['echo', 'golf', 'quebec'] -> delta
+  |- false node: ['lima', 'romeo', 'echo'] -> mike
+  |  |- false node: ['papa', 'echo', 'golf'] -> alpha
+  |  |  |- false node: ['golf', 'romeo'] -> november
+  |  |  |  |- next node: ['lima'] -> juliet
+  |  |  |  |- false node: ['india', 'oscar'] -> romeo
+  |  |  |  |  |- false node: TRUE -> oscar
+  |  |  |  |  |  |- next node: TRUE -> juliet
+  |  |  |  |  |  |  |- next node: ['foxtrot'] -> bravo
+  |  |  |  |  |  |  |  |- next node: ['juliet', 'lima'] -> india
+  |  |  |  |  |  |  |  |  |- false node: TRUE -> oscar
+  |  |  |  |  |  |  |  |  |  |- next node: ['quebec'] -> alpha
+  |  |  |  |  |  |  |  |  |  |  |- next node: ['golf'] -> alpha
+  |  |  |  |  |  |  |  |  |  |  |- false node: TRUE -> november
+  |  |  |  |  |  |  |  |  |  |  |  |- next node: TRUE -> kilo
+  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: ['charlie'] -> oscar
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['oscar'] -> mike
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: TRUE -> mike
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: ['alpha'] -> kilo
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['juliet'] -> india
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: ['november'] -> alpha
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['november', 'kilo'] -> echo
+  |  |  |  |  |  |  |  |- false node: ['papa'] -> kilo
+  |  |  |  |  |  |  |  |  |- next node: ['alpha', 'golf'] -> alpha
+  |  |  |  |  |  |  |  |  |  |- false node: ['quebec'] -> alpha
+  |  |  |  |  |  |  |  |  |  |  |- false node: ['lima'] -> india
+  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['november', 'romeo'] -> november
+  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['echo', 'hotel'] -> lima
+  |  |  |  |  |  |  |  |  |- false node: ['november', 'quebec'] -> juliet
+  |  |  |  |  |  |  |  |  |  |- next node: TRUE -> alpha
+  |  |  |  |  |  |  |  |  |  |  |- next node: TRUE -> mike
+  |  |  |  |  |  |  |  |  |  |- false node: TRUE -> golf
+  |  |  |  |  |  |  |  |  |  |  |- next node: TRUE -> quebec
+  |  |  |  |  |  |  |  |  |  |  |  |- next node: ['oscar'] -> kilo
+  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: ['lima', 'juliet'] -> india
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['mike'] -> hotel
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['juliet', 'kilo'] -> alpha
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['quebec'] -> romeo
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['golf'] -> papa
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['juliet'] -> foxtrot
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: TRUE -> kilo
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: ['echo'] -> oscar
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: TRUE -> lima
+  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: TRUE -> foxtrot
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: TRUE -> quebec
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: ['golf'] -> juliet
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: ['delta', 'charlie'] -> india
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: TRUE -> charlie
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: ['bravo', 'kilo'] -> india
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['juliet', 'quebec'] -> charlie
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: TRUE -> alpha
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: ['juliet', 'quebec', 'hotel'] -> golf
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['romeo', 'india', 'hotel'] -> bravo
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: TRUE -> quebec
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: ['alpha', 'juliet'] -> alpha
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['kilo', 'bravo', 'delta'] -> echo
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['romeo', 'delta', 'bravo'] -> echo
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['november'] -> echo
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: ['echo', 'kilo'] -> quebec
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: TRUE -> foxtrot
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: ['delta'] -> golf
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['mike'] -> lima
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: TRUE -> papa
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: ['quebec', 'india'] -> papa
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: ['juliet'] -> quebec
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['india', 'hotel'] -> foxtrot
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: TRUE -> echo
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: ['delta', 'alpha', 'india'] -> november
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['echo', 'bravo'] -> november
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: TRUE -> delta
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: ['lima', 'delta', 'charlie'] -> oscar
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['delta', 'echo'] -> india
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['hotel', 'juliet'] -> echo
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['bravo'] -> india
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: TRUE -> charlie
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: TRUE -> lima
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: ['juliet'] -> papa
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['charlie'] -> lima
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: TRUE -> foxtrot
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: ['charlie'] -> papa
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: ['romeo', 'mike'] -> alpha
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: TRUE -> quebec
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: ['kilo'] -> lima
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: ['mike'] -> hotel
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['mike'] -> delta
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: TRUE -> bravo
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['echo'] -> bravo
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: ['hotel'] -> quebec
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: TRUE -> quebec
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: TRUE -> mike
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: TRUE -> oscar
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: TRUE -> foxtrot
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: ['india'] -> bravo
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['delta'] -> bravo
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: TRUE -> lima
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: ['quebec'] -> oscar
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: TRUE -> echo
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: TRUE -> india
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: TRUE -> hotel
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- next node: TRUE -> quebec
