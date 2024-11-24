@@ -44,9 +44,10 @@ class Node:
       else:
         self.false_node.add_node(conditions, result)
 
-  def print_subtree(self, prefix : str = ""):
-    print(f"{self.rule_conditions} -> {self.rule_result}")
-    
+  def print_subtree(self, prefix: str = ""):
+    rule_conditions_str = "TRUE" if not self.rule_conditions else self.rule_conditions
+    print(f"{rule_conditions_str} -> {self.rule_result}")
+      
     prefix = prefix + "  |"
     if self.next_node != None:
       print(f"{prefix}- next node: ", end="")
@@ -58,7 +59,8 @@ class Node:
       
   def save_subtree(self, file, prefix: str = ""):
       # Write the current node's details
-      file.write(f"{self.rule_conditions} -> {self.rule_result}\n")
+      rule_conditions_str = "TRUE" if not self.rule_conditions else self.rule_conditions
+      file.write(f"{rule_conditions_str} -> {self.rule_result}\n")
       
       # Update the prefix for child nodes
       child_prefix = prefix + "  |"
