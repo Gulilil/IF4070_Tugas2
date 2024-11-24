@@ -1,5 +1,6 @@
 from query import Query
 from node import Node
+import os
 import re
 
 class RDR:
@@ -46,21 +47,34 @@ class RDR:
       print("Printing the RDR tree:")
       self.tree.print_subtree("")
       
-  def save_tree(self, filename: str):
+  def save_txt_tree(self, filename: str):
       if self.tree is None:
           print("Tree is empty")
       else:
           print(f"Saving tree to {filename}.txt")
-          with open(filename + ".txt", "w") as file:
+          with open(f"../test/txt/{filename}.txt", "w") as file:
               self.tree.save_subtree(file)
               
-  def load_tree(self, filename: str):
-    print(f"\nLoading tree from {filename}.txt\n")
-    with open(filename + ".txt", "r") as file:
-        lines = file.readlines()  # Read all lines
-        self.tree = self.load_subtree(lines, 0, len(lines), 0)
+  def load_txt_tree(self):
+    file_name = input("Enter the file name to load: ").strip()
+    
+    # Construct the full path to the text file in the 'test/txt' directory
+    file_path = os.path.join('../test/txt', file_name + ".txt")
+        
+    # Check if the file exists
+    while not os.path.exists(file_path):
+        print(f"[ERROR] File {file_path} not found")
+        file_name = input("Enter the file name: ").strip()
+        file_path = os.path.join('../test/txt', file_name + ".txt")
 
-  def load_subtree(self, lines: list[str], start_index: int, end_index: int, depth: int) -> tuple[Node, int]:
+    print(f"\nLoading tree from {file_path}\n")
+        
+    # Open the file and process it
+    with open(file_path, "r") as file:
+      lines = file.readlines()  # Read all lines
+      self.tree = self.load_txt_subtree(lines, 0, len(lines), 0)
+
+  def load_txt_subtree(self, lines: list[str], start_index: int, end_index: int, depth: int) -> tuple[Node, int]:
     # Extract the current line and determine the level of indentation
     current_line = lines[start_index]
 
@@ -102,12 +116,30 @@ class RDR:
 
     if (next_node_index_range[0] is not None):
       next_node_index_range[1] = false_node_index_range[0] if (false_node_index_range[0] is not None) else end_index
-      current_node.next_node = self.load_subtree(lines, next_node_index_range[0], next_node_index_range[1], next_depth)
+      current_node.next_node = self.load_txt_subtree(lines, next_node_index_range[0], next_node_index_range[1], next_depth)
     if (false_node_index_range[0] is not None):
       false_node_index_range[1] = end_index 
-      current_node.false_node = self.load_subtree(lines, false_node_index_range[0], false_node_index_range[1], next_depth)
+      current_node.false_node = self.load_txt_subtree(lines, false_node_index_range[0], false_node_index_range[1], next_depth)
     
     return current_node
+  
+  def save_json_tree(self, filename: str):
+    if self.tree is None:
+      print("Tree is empty")
+    else:
+      print(f"Saving tree to {filename}.json")
+      with open(f"../test/json/{filename}.json", "w") as file:
+        file.write(self.tree.to_json())
+        
+  def load_json_tree(self):
+    file_name = input("Enter the file name to load: ").strip()
+    file_path = os.path.join('../test/json', file_name + ".json")
+    while not os.path.exists(file_path):
+      print(f"[ERROR] File {file_path} not found")
+      file_name = input("Enter the file name: ").strip()
+      file_path = os.path.join('../test/json', file_name + ".json")
 
-      
-
+    print(f"\nLoading tree from {file_path}\n")
+    with open(file_path, "r") as file:
+      json_str = file.read()
+      self.tree = Node.from_json(json_str)

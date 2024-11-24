@@ -1,3 +1,4 @@
+import json
 
 class Node:
   def __init__ (self, conditions : list = [], result : str = None):
@@ -73,3 +74,28 @@ class Node:
           # Write the "false node" label and recursively save the false node
           file.write(f"{child_prefix}- false node: ")
           self.false_node.save_subtree(file, child_prefix)
+          
+  def to_json(self):
+    json_dict = {}
+    json_dict["rule_conditions"] = self.rule_conditions
+    json_dict["rule_result"] = self.rule_result
+    
+    if self.next_node is not None:
+      json_dict["next_node"] = self.next_node.to_json()
+      
+    if self.false_node is not None:
+      json_dict["false_node"] = self.false_node.to_json()
+      
+    return json.dumps(json_dict)
+  
+  def from_json(json_str: str):
+    json_dict = json.loads(json_str)
+    node = Node(json_dict["rule_conditions"], json_dict["rule_result"])
+    
+    if "next_node" in json_dict:
+      node.next_node = Node.from_json(json_dict["next_node"])
+      
+    if "false_node" in json_dict:
+      node.false_node = Node.from_json(json_dict["false_node"])
+      
+    return node
