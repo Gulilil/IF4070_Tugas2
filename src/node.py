@@ -86,7 +86,7 @@ class Node:
     if self.false_node is not None:
       json_dict["false_node"] = self.false_node.to_json()
       
-    return json.dumps(json_dict)
+    return json.dumps(json_dict, indent=2)
   
   def from_json(json_str: str):
     json_dict = json.loads(json_str)
