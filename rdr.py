@@ -54,84 +54,83 @@ class RDR:
               self.tree.save_subtree(file)
               
   def load_tree(self, filename: str):
-      print(f"\nLoading tree from {filename}.txt\n")
-      with open(filename + ".txt", "r") as file:
-          lines = file.readlines()  # Read all lines once
-          self.tree = self._load_subtree(lines, 0)[0]
+    print(f"\nLoading tree from {filename}.txt\n")
+    with open(filename + ".txt", "r") as file:
+        lines = file.readlines()  # Read all lines
+        self.tree = self._load_subtree(lines, 0)[0]
 
-  def _load_subtree(self, lines: list[str], indent_level: int) -> tuple[Node, int]:
-    if not lines:
-        return None, 0
+    """
+    Load the subtree from the file, for example condition of subtree:
+      TRUE -> b (basis level 0, conditions: TRUE/"", result: b)
+    |- next node: TRUE -> c (next node level 1, conditions: TRUE/"", result: c)
+    |  |- next node: ['a'] -> c (next node level 2, conditions: a, result: c)
+    |  |  |- false node: ['c'] -> d (false node level 3, conditions: c, result: d)
+    |  |  |  |- next node: ['b'] -> d (next node level 4, conditions: b, result: d)
+    |  |  |  |- false node: ['d'] -> a (false node level 4, conditions: d, result: a)
+    |  |  |  |  |- false node: TRUE -> a (false node level 5, conditions: TRUE/"", result a)
+    |  |  |  |  |  |- next node: ['b'] -> e (false node level 6, conditions: b, result: e)
+    """
+    
+  def _load_subtree(self, lines: list[str], index: int) -> tuple[Node, int]:
+      # Extract the current line and determine the level of indentation
+      current_line = lines[index].strip()
+      prefix_level = len(lines[index]) - len(current_line)
+      
+      # Debug: print the current line and prefix level
+      print(f"Parsing line: '{current_line}', Prefix level: {prefix_level}")
+      
+      # Extract conditions and result from the line
+      rule_conditions_str, rule_result = current_line.split("->")
+      rule_conditions_str = rule_conditions_str.strip()
+      rule_result = rule_result.strip()
+      
+      # Debug: print extracted conditions and result
+      print(f"Conditions: {rule_conditions_str}, Result: {rule_result}")
+      
+      # Parse the rule conditions
+      if rule_conditions_str == "TRUE":
+          rule_conditions = []
+      else:
+          # Convert conditions string to list
+          try:
+              rule_conditions = re.findall(r"'(.*?)'", rule_conditions_str)
+              # Debug: print the parsed conditions
+              print(f"Parsed conditions: {rule_conditions}")
+          except Exception as e:
+              print(f"Error parsing conditions: {e}")
+              rule_conditions = []
+      
+      # Create the current node
+      current_node = Node(rule_conditions, rule_result)
+      print(f"Created Node with Conditions: {rule_conditions}, Result: {rule_result}")
+      
+      # Move to the next line
+      index += 1
+      
+      # Parse child nodes
+      while index < len(lines):
+          next_line = lines[index].strip()
+          prefix_count = len(lines[index]) - len(next_line)
+          
+          # Debug: print the next line and prefix count
+          print(f"Parsing next line: '{next_line}', Prefix count: {prefix_count}")
 
-    node = None
-    i = 0  # Start from the current line in the list
+          # If prefix count is 0, we have reached the same or higher level (end of current subtree)
+          if prefix_count <= prefix_level:
+              break
 
-    while i < len(lines):
-        line = lines[i].rstrip()
-        current_indent = self._get_indent_level(line)
+          # If prefix count is greater than the current prefix level, determine next node or false node
+          if "next node:" in next_line:
+              print(f"Parsing next node")
+              current_node.next_node, index = self._load_subtree(lines, index)
+          elif "false node:" in next_line:
+              print(f"Parsing false node")
+              current_node.false_node, index = self._load_subtree(lines, index)
+          else:
+              print(f"Line does not match expected 'next node' or 'false node', breaking")
+              break
 
-        # Debug: Print the current processing line and indentation details
-        print(f"Processing line: {line}")
-        print(f"Current indent level: {current_indent}, Expected indent level: {indent_level}")
-
-        if current_indent < indent_level:
-            # If we encounter a line with less indentation, return to the previous level
-            print(f"Breaking out of loop. Line's indent level {current_indent} < expected {indent_level}.")
-            break
-
-        if current_indent == indent_level:
-            # Parse the current node
-            try:
-                conditions, result = line.split(" -> ")
-                print(f"Conditions: {conditions}, Result: {result.strip()}")
-                # conditions = eval(conditions.strip())  # Safely convert string representation of list to actual list
-            except Exception as e:
-                raise ValueError(f"Failed to parse line: {line}. Error: {e}")
-
-            # Debug: Print parsed node details
-            print(f"Node conditions: {conditions}, Node result: {result.strip()}")
-
-            node = Node(conditions, result.strip())
-            i += 1
-
-        # Parse child nodes
-        while i < len(lines) and self._get_indent_level(lines[i]) > indent_level:
-            branch_line = lines[i].strip()
-
-            if branch_line.startswith("|- next node:"):
-                branch_conditions, branch_result = branch_line[len("|- next node:"):].split(" -> ")
-            elif branch_line.startswith("|- false node:"):
-                branch_conditions, branch_result = branch_line[len("|- false node:"):].split(" -> ")
-            else:
-                branch_conditions, branch_result = None, None
-
-            if branch_conditions is not None:
-                try:
-                    branch_conditions = eval(branch_conditions.strip())  # Convert to list
-                except Exception as e:
-                    raise ValueError(f"Failed to parse branch line: {branch_line}. Error: {e}")
-
-                # Debug: Print extracted branch details
-                print(f"Processing branch: {branch_conditions} -> {branch_result.strip()}")
-
-            if branch_line.startswith("|- next node:"):
-                print("Parsing next node...")
-                child_node, offset = self._load_subtree(lines[i + 1:], indent_level + 2)
-                node.next_node = child_node
-                i += offset + 1
-            elif branch_line.startswith("|- false node:"):
-                print("Parsing false node...")
-                child_node, offset = self._load_subtree(lines[i + 1:], indent_level + 2)
-                node.false_node = child_node
-                i += offset + 1
-            else:
-                # Debug: Print unrecognized line
-                print(f"Unrecognized branch line: {lines[i]}")
-                i += 1
-
-        break  # Exit after parsing the main node and its children
-
-    return node, i
-
-  def _get_indent_level(self, line: str) -> int:
-      return len(line) - len(line.lstrip())
+      # Debug: print the returning node
+      print(f"Returning node with Conditions: {current_node.rule_conditions}, Result: {current_node.rule_result}")
+      
+      return current_node, index

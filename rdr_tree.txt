@@ -1,6 +1,8 @@
-['a'] -> a
-  |- next node: [] -> cc
-  |  |- next node: [] -> bb
-  |- false node: ['aa'] -> aa
-  |  |- false node: ['bb'] -> bb
-  |  |  |- false node: ['cc'] -> cc
+TRUE -> b
+  |- next node: TRUE -> c
+  |  |- next node: ['a'] -> c 
+  |  |  |- false node: ['c'] -> d
+  |  |  |  |- next node: ['b'] -> d 
+  |  |  |  |- false node: ['d'] -> a
+  |  |  |  |  |- false node: TRUE -> a
+  |  |  |  |  |  |- next node: ['b'] -> e
