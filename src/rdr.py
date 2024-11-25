@@ -73,13 +73,16 @@ class RDR:
     with open(file_path, "r") as file:
       lines = file.readlines()  # Read all lines
       self.tree = self.load_txt_subtree(lines, 0, len(lines), 0)
-
+  
+  
+    
   def load_txt_subtree(self, lines: list[str], start_index: int, end_index: int, depth: int) -> tuple[Node, int]:
+
     # Extract the current line and determine the level of indentation
     current_line = lines[start_index]
 
     # Remove unnecessary substr
-    list_to_replace = ["|-", "|", "next node:", "false node:"]
+    list_to_replace = ["|-", "|", "true node:", "false node:"]
     for str_to_replace in list_to_replace:
         current_line = current_line.replace(str_to_replace, "")
     current_line = current_line.strip()
@@ -102,21 +105,27 @@ class RDR:
     current_node = Node(rule_conditions, rule_result)
 
     next_depth = depth + 1
-    next_node_index_range = [None, None]
+    true_node_index_range = [None, None]
     false_node_index_range = [None, None]
-  
+
+    def count_before_character(s, char):
+      if char in s:
+          return s.index(char)
+      else:
+          return 0 
+      
     # Search for children node
     for i in range(start_index, end_index):
       line = lines[i]
-      if (line.count("|") == next_depth):
-          if ("next node:" in line):
-            next_node_index_range[0] = i
+      if (count_before_character(line, "-")//3 == next_depth):
+          if ("true node:" in line):
+            true_node_index_range[0] = i
           elif ("false node:" in line):
             false_node_index_range[0] = i
 
-    if (next_node_index_range[0] is not None):
-      next_node_index_range[1] = false_node_index_range[0] if (false_node_index_range[0] is not None) else end_index
-      current_node.next_node = self.load_txt_subtree(lines, next_node_index_range[0], next_node_index_range[1], next_depth)
+    if (true_node_index_range[0] is not None):
+      true_node_index_range[1] = false_node_index_range[0] if (false_node_index_range[0] is not None) else end_index
+      current_node.true_node = self.load_txt_subtree(lines, true_node_index_range[0], true_node_index_range[1], next_depth)
     if (false_node_index_range[0] is not None):
       false_node_index_range[1] = end_index 
       current_node.false_node = self.load_txt_subtree(lines, false_node_index_range[0], false_node_index_range[1], next_depth)
