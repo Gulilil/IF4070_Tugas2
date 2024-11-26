@@ -99,13 +99,17 @@ suspicious information, claim filed over 60 days > flag for fraud review'''
 if __name__ == "__main__":
 
 
-  rdr = RDR()
-  queries = INSURANCE_CLAIM_QUERIES.split("\n")
-  for query in queries:
-    rdr.execute_query(Query(query))
+  # rdr = RDR()
+  # queries = INSURANCE_CLAIM_QUERIES.split("\n")
+  # for query in queries:
+  #   rdr.execute_query(Query(query))
 
-  rdr.save_txt_tree("insurance_claim_knowledge")
+  # rdr.save_txt_tree("insurance_claim_knowledge")
   # rdr.save_json_tree("insurance_claim_knowledge")
+
+  rdr = RDR()
+  rdr.load_txt_tree()
+  rdr.print_tree()
 
   
 
