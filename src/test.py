@@ -37,15 +37,15 @@ import random
 
 INSURANCE_CLAIM_QUERIES = '''damage from animal, collision, at-fault > apply collision coverage
 damage during off-road use, off-road coverage available > apply off-road coverage
-claim exceeds $10,000, hit-and-run, uninsured motorist > flag for supervisor review
+claim exceeds $10000, hit-and-run, uninsured motorist > flag for supervisor review
 claim, multiple vehicles, not at-fault, major damage > apply third-party insurance for each vehicle
 suspicious information, claim filed over 60 days > flag for fraud review
 damage from hit-and-run, no third-party insurance, major damage > apply uninsured motorist coverage
 luxury vehicle, minor damage, comprehensive > adjust payout for luxury vehicle standards
-claim exceeds $15,000, multiple injuries, at-fault > flag for supervisor review
+claim exceeds $15000, multiple injuries, at-fault > flag for supervisor review
 electric vehicle, battery damage, comprehensive > apply comprehensive coverage for battery replacement
 pre-existing damage, comprehensive, theft > exclude pre-existing damage from payout
-claim exceeds $15,000, comprehensive, major damage > flag for supervisor review
+claim exceeds $15000, comprehensive, major damage > flag for supervisor review
 collision, at-fault, major damage > requires inspection
 hit-and-run, no insurance, vehicle identified > apply uninsured motorist coverage
 damage from hit-and-run, no third-party insurance, minor damage > apply uninsured motorist coverage for repairs
@@ -61,11 +61,11 @@ damage from hit-and-run, no third-party insurance, major damage > apply uninsure
 claim, multiple vehicles, at-fault, major damage > adjust payout for each vehicle involved
 luxury vehicle, major damage, collision > send for specialized adjuster review
 pre-existing damage, collision, at-fault > exclude pre-existing damage from payout
-claim exceeds $15,000, medical expenses > verify medical coverage and adjust payout
+claim exceeds $15000, medical expenses > verify medical coverage and adjust payout
 suspicious information, no supporting documents, major damage > deny claim
 rideshare use, collision, not at-fault > process under rideshare coverage
 no collision coverage, not at-fault, vehicle damage > deny collision claim
-claim exceeds $10,000, hit-and-run, uninsured motorist > flag for supervisor review
+claim exceeds $10000, hit-and-run, uninsured motorist > flag for supervisor review
 hit-and-run, police report, third-party identified > process uninsured motorist claim
 electric vehicle, major damage, collision > adjust payout for ev repair costs
 vehicle total loss, modified aftermarket parts, not at-fault > adjust payout for aftermarket parts
@@ -78,7 +78,7 @@ electric vehicle, minor damage, collision > apply ev-specific repair coverage
 no collision coverage, at-fault, vehicle damage > deny collision claim
 damage during off-road use, no off-road coverage, major damage > deny claim
 driver under 18, at-fault, minor damage > adjust payout based on minor driver rules
-claim exceeds $15,000, comprehensive, major damage > flag for supervisor review
+claim exceeds $15000, comprehensive, major damage > flag for supervisor review
 pre-existing damage, comprehensive, theft > exclude pre-existing damage from payout
 claim, multiple vehicles, at-fault, major damage > adjust payout for each vehicle involved
 rideshare use, non-collision, theft > process under rideshare coverage for theft
@@ -88,7 +88,7 @@ driver intoxicated, collision, not at-fault > deny claim
 luxury vehicle, major damage, collision > send for specialized adjuster review
 policy exclusion, unlicensed driver > deny claim
 damage from hit-and-run, no third-party insurance, major damage > apply uninsured motorist coverage
-claim exceeds $15,000, medical expenses > verify medical coverage and adjust payout
+claim exceeds $15000, medical expenses > verify medical coverage and adjust payout
 rideshare use, collision, not at-fault > process under rideshare coverage
 electric vehicle, battery damage, comprehensive > apply comprehensive coverage for battery replacement
 collision, at-fault, minor damage > apply repair estimate
@@ -105,6 +105,7 @@ if __name__ == "__main__":
     rdr.execute_query(Query(query))
 
   rdr.save_txt_tree("insurance_claim_knowledge")
+  # rdr.save_json_tree("insurance_claim_knowledge")
 
   
 

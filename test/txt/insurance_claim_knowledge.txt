@@ -1,7 +1,7 @@
 ['damage from animal', 'collision', 'at-fault'] -> apply collision coverage
   |- true node: TRUE -> apply collision coverage
   |- false node: ['damage during off-road use', 'off-road coverage available'] -> apply off-road coverage
-  |  |- false node: ['claim exceeds $10', '000', 'hit-and-run', 'uninsured motorist'] -> flag for supervisor review
+  |  |- false node: ['claim exceeds $10000', 'hit-and-run', 'uninsured motorist'] -> flag for supervisor review
   |  |  |- true node: TRUE -> flag for supervisor review
   |  |  |- false node: ['claim', 'multiple vehicles', 'not at-fault', 'major damage'] -> apply third-party insurance for each vehicle
   |  |  |  |- false node: ['suspicious information', 'claim filed over 60 days'] -> flag for fraud review
@@ -10,12 +10,12 @@
   |  |  |  |  |  |- true node: TRUE -> apply uninsured motorist coverage
   |  |  |  |  |  |  |- true node: TRUE -> apply uninsured motorist coverage
   |  |  |  |  |  |- false node: ['luxury vehicle', 'minor damage', 'comprehensive'] -> adjust payout for luxury vehicle standards
-  |  |  |  |  |  |  |- false node: ['claim exceeds $15', '000', 'multiple injuries', 'at-fault'] -> flag for supervisor review
+  |  |  |  |  |  |  |- false node: ['claim exceeds $15000', 'multiple injuries', 'at-fault'] -> flag for supervisor review
   |  |  |  |  |  |  |  |- false node: ['electric vehicle', 'battery damage', 'comprehensive'] -> apply comprehensive coverage for battery replacement
   |  |  |  |  |  |  |  |  |- true node: TRUE -> apply comprehensive coverage for battery replacement
   |  |  |  |  |  |  |  |  |- false node: ['pre-existing damage', 'comprehensive', 'theft'] -> exclude pre-existing damage from payout
   |  |  |  |  |  |  |  |  |  |- true node: TRUE -> exclude pre-existing damage from payout
-  |  |  |  |  |  |  |  |  |  |- false node: ['claim exceeds $15', '000', 'comprehensive', 'major damage'] -> flag for supervisor review
+  |  |  |  |  |  |  |  |  |  |- false node: ['claim exceeds $15000', 'comprehensive', 'major damage'] -> flag for supervisor review
   |  |  |  |  |  |  |  |  |  |  |- true node: TRUE -> flag for supervisor review
   |  |  |  |  |  |  |  |  |  |  |- false node: ['collision', 'at-fault', 'major damage'] -> requires inspection
   |  |  |  |  |  |  |  |  |  |  |  |- false node: ['hit-and-run', 'no insurance', 'vehicle identified'] -> apply uninsured motorist coverage
@@ -34,7 +34,7 @@
   |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['luxury vehicle', 'major damage', 'collision'] -> send for specialized adjuster review
   |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- true node: TRUE -> send for specialized adjuster review
   |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['pre-existing damage', 'collision', 'at-fault'] -> exclude pre-existing damage from payout
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['claim exceeds $15', '000', 'medical expenses'] -> verify medical coverage and adjust payout
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['claim exceeds $15000', 'medical expenses'] -> verify medical coverage and adjust payout
   |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- true node: TRUE -> verify medical coverage and adjust payout
   |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['suspicious information', 'no supporting documents', 'major damage'] -> deny claim
   |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['rideshare use', 'collision', 'not at-fault'] -> process under rideshare coverage

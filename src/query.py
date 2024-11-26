@@ -14,8 +14,8 @@ class Query:
   def __init__ (self, input: str):
     try:
       assert "?" in input or ">" in input
-      ask_pattern = r'^([\s\S]+(,\s?[\s\S]+)*)\?$'
-      add_pattern = r'^([\s\S]*(,\s?[\s\S]+)*)\s?>\s?[\s\S]+$'
+      ask_pattern = r'^([\w\s\-\.$\(\)]+(,\s?[\w\s\-\.$\(\)]+)*)\?$'
+      add_pattern = r'^([\w\s\-\.$\(\)]*(,\s?[\w\s\-\.$\(\)]+)*)\s?>\s?[\w\s\-\.$\(\)]+$'
       input = input.strip()
 
       if (bool(re.match(ask_pattern, input))):
