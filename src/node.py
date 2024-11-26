@@ -9,8 +9,9 @@ class Node:
 
   def check_rule(self, input: list):
     # If self.rule_conditions = [] (empty list) => that means if TRUE (always True)
+    upper_input = [data.upper() for data in input]
     for cond in self.rule_conditions:
-      if (cond not in input):
+      if (cond.upper() not in upper_input):
         return False
     return True
 

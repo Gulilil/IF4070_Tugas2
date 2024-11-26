@@ -1,6 +1,0 @@
-['a'] -> b
-  |- next node: ['ab'] -> a
-  |- false node: ['b'] -> c
-  |  |- false node: ['c'] -> a
-  |  |  |- false node: TRUE -> a
-  |  |  |  |- next node: TRUE -> b

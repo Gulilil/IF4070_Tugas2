@@ -52,20 +52,20 @@ class RDR:
           print("Tree is empty")
       else:
           print(f"Saving tree to {filename}.txt")
-          with open(f"../test/txt/{filename}.txt", "w") as file:
+          with open(os.path.join(os.getcwd(), 'test', 'txt', filename + ".txt"), "w") as file:
               self.tree.save_subtree(file)
               
   def load_txt_tree(self):
     file_name = input("Enter the file name to load: ").strip()
     
     # Construct the full path to the text file in the 'test/txt' directory
-    file_path = os.path.join('../test/txt', file_name + ".txt")
+    file_path = os.path.join(os.getcwd(), 'test', 'txt', file_name + ".txt")
         
     # Check if the file exists
     while not os.path.exists(file_path):
         print(f"[ERROR] File {file_path} not found")
         file_name = input("Enter the file name: ").strip()
-        file_path = os.path.join('../test/txt', file_name + ".txt")
+        file_path = os.path.join(os.getcwd(), 'test', 'txt', file_name + ".txt")
 
     print(f"\nLoading tree from {file_path}\n")
         
@@ -137,16 +137,16 @@ class RDR:
       print("Tree is empty")
     else:
       print(f"Saving tree to {filename}.json")
-      with open(f"../test/json/{filename}.json", "w") as file:
+      with open(os.path.join(os.getcwd(), 'test', 'json', filename + ".json"), "w") as file:
         file.write(self.tree.to_json())
         
   def load_json_tree(self):
     file_name = input("Enter the file name to load: ").strip()
-    file_path = os.path.join('../test/json', file_name + ".json")
+    file_path = os.path.join(os.getcwd(), 'test', 'json', file_name + ".json")
     while not os.path.exists(file_path):
       print(f"[ERROR] File {file_path} not found")
       file_name = input("Enter the file name: ").strip()
-      file_path = os.path.join('../test/json', file_name + ".json")
+      file_path = os.path.join(os.getcwd(), 'test', 'json', file_name + ".json")
 
     print(f"\nLoading tree from {file_path}\n")
     with open(file_path, "r") as file:
