@@ -1,60 +1,50 @@
-['damage from animal', 'collision', 'at-fault'] -> apply collision coverage
-  |- true node: TRUE -> apply collision coverage
-  |- false node: ['damage during off-road use', 'off-road coverage available'] -> apply off-road coverage
-  |  |- false node: ['claim exceeds $10000', 'hit-and-run', 'uninsured motorist'] -> flag for supervisor review
-  |  |  |- true node: TRUE -> flag for supervisor review
-  |  |  |- false node: ['claim', 'multiple vehicles', 'not at-fault', 'major damage'] -> apply third-party insurance for each vehicle
-  |  |  |  |- false node: ['suspicious information', 'claim filed over 60 days'] -> flag for fraud review
-  |  |  |  |  |- true node: TRUE -> flag for fraud review
-  |  |  |  |  |- false node: ['damage from hit-and-run', 'no third-party insurance', 'major damage'] -> apply uninsured motorist coverage
-  |  |  |  |  |  |- true node: TRUE -> apply uninsured motorist coverage
-  |  |  |  |  |  |  |- true node: TRUE -> apply uninsured motorist coverage
-  |  |  |  |  |  |- false node: ['luxury vehicle', 'minor damage', 'comprehensive'] -> adjust payout for luxury vehicle standards
-  |  |  |  |  |  |  |- false node: ['claim exceeds $15000', 'multiple injuries', 'at-fault'] -> flag for supervisor review
-  |  |  |  |  |  |  |  |- false node: ['electric vehicle', 'battery damage', 'comprehensive'] -> apply comprehensive coverage for battery replacement
-  |  |  |  |  |  |  |  |  |- true node: TRUE -> apply comprehensive coverage for battery replacement
-  |  |  |  |  |  |  |  |  |- false node: ['pre-existing damage', 'comprehensive', 'theft'] -> exclude pre-existing damage from payout
-  |  |  |  |  |  |  |  |  |  |- true node: TRUE -> exclude pre-existing damage from payout
-  |  |  |  |  |  |  |  |  |  |- false node: ['claim exceeds $15000', 'comprehensive', 'major damage'] -> flag for supervisor review
-  |  |  |  |  |  |  |  |  |  |  |- true node: TRUE -> flag for supervisor review
-  |  |  |  |  |  |  |  |  |  |  |- false node: ['collision', 'at-fault', 'major damage'] -> requires inspection
-  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['hit-and-run', 'no insurance', 'vehicle identified'] -> apply uninsured motorist coverage
-  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['damage from hit-and-run', 'no third-party insurance', 'minor damage'] -> apply uninsured motorist coverage for repairs
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['driver intoxicated', 'collision', 'at-fault'] -> deny claim
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['vehicle total loss', 'modified aftermarket parts', 'at-fault'] -> adjust payout for aftermarket parts
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['late claim filing (More than 90 days)', 'collision'] -> deny claim
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['damage during off-road use', 'no off-road coverage', 'major damage'] -> deny claim
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- true node: TRUE -> deny claim
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['policy exclusion', 'off-road use'] -> deny claim for off-road damage
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['uninsured third party', 'hit-and-run', 'minor damage'] -> apply uninsured motorist coverage for repairs
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['damage from animal', 'comprehensive'] -> apply comprehensive coverage
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['damage from hit-and-run', 'police report'] -> process under uninsured motorist coverage
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['claim', 'multiple vehicles', 'at-fault', 'major damage'] -> adjust payout for each vehicle involved
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- true node: TRUE -> adjust payout for each vehicle involved
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['luxury vehicle', 'major damage', 'collision'] -> send for specialized adjuster review
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- true node: TRUE -> send for specialized adjuster review
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['pre-existing damage', 'collision', 'at-fault'] -> exclude pre-existing damage from payout
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['claim exceeds $15000', 'medical expenses'] -> verify medical coverage and adjust payout
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- true node: TRUE -> verify medical coverage and adjust payout
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['suspicious information', 'no supporting documents', 'major damage'] -> deny claim
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['rideshare use', 'collision', 'not at-fault'] -> process under rideshare coverage
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- true node: TRUE -> process under rideshare coverage
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['no collision coverage', 'not at-fault', 'vehicle damage'] -> deny collision claim
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['hit-and-run', 'police report', 'third-party identified'] -> process uninsured motorist claim
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['electric vehicle', 'major damage', 'collision'] -> adjust payout for ev repair costs
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['vehicle total loss', 'modified aftermarket parts', 'not at-fault'] -> adjust payout for aftermarket parts
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['rideshare use', 'collision', 'at-fault'] -> verify commercial coverage
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['collision', 'not at-fault', 'minor damage'] -> process claim under own coverage
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['uninsured third party', 'hit-and-run', 'major damage'] -> apply uninsured motorist coverage
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['suspicious information', 'no supporting documents', 'minor damage'] -> request additional documents
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['electric vehicle', 'minor damage', 'collision'] -> apply ev-specific repair coverage
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['no collision coverage', 'at-fault', 'vehicle damage'] -> deny collision claim
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['driver under 18', 'at-fault', 'minor damage'] -> adjust payout based on minor driver rules
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['rideshare use', 'non-collision', 'theft'] -> process under rideshare coverage for theft
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['uninsured third party', 'hit-and-run', 'no police report'] -> deny claim
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['late claim filing (More than 90 days)', 'comprehensive'] -> deny claim
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['driver intoxicated', 'collision', 'not at-fault'] -> deny claim
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['policy exclusion', 'unlicensed driver'] -> deny claim
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['collision', 'at-fault', 'minor damage'] -> apply repair estimate
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['driver under 18', 'not at-fault', 'minor damage'] -> adjust payout based on minor driver rules
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |- false node: ['damage from hit-and-run', 'no police report'] -> process under uninsured motorist coverage
+['collision', 'at-fault'] -> requires inspection
+  |- true node: ['hit-and-run'] -> apply uninsured motorist coverage
+  |  |- false node: ['major damage'] -> requires inspection
+  |     |- false node: ['minor damage'] -> apply repair estimate
+  |        |- false node: ['uninsured motorist'] -> deny uninsured motorist coverage
+  |- false node: ['collision', 'not at-fault'] -> check third-party insurance
+     |- true node: ['major damage'] -> check third-party insurance
+     |  |- false node: ['minor damage'] -> process claim under own coverage
+     |- false node: ['collision', 'no police report'] -> request police report before processing
+        |- false node: ['damage from animal'] -> apply comprehensive coverage
+           |- true node: ['parked vehicle'] -> apply comprehensive coverage
+           |- false node: ['hit-and-run', 'uninsured third party'] -> apply uninsured motorist coverage
+              |- true node: ['major damage'] -> apply uninsured motorist coverage
+              |  |- false node: ['minor damage'] -> apply uninsured motorist coverage for repairs
+              |- false node: ['late claim filing'] -> deny claim
+                 |- true node: ['theft'] -> request explanation for delay
+                 |- false node: ['comprehensive'] -> total loss evaluation
+                    |- true node: ['weather-related'] -> total loss evaluation
+                    |  |- false node: ['theft', 'no police report'] -> deny claim
+                    |     |- false node: ['claim filed over 60 days'] -> request explanation for late filing
+                    |- false node: ['claim exceeds $15000', 'medical expenses'] -> verify medical coverage and adjust payout
+                       |- false node: ['claim exceeds $15000', 'multiple injuries', 'at-fault'] -> flag for supervisor review
+                          |- false node: ['claim exceeds $15000', 'hit-and-run', 'uninsured motorist'] -> flag for supervisor review
+                             |- false node: ['luxury vehicle'] -> adjust payout for luxury vehicle standards
+                                |- true node: ['major damage'] -> send for specialized adjuster review
+                                |  |- false node: ['stolen'] -> verify police report and apply theft coverage
+                                |- false node: ['electric vehicle'] -> adjust payout for ev repair costs
+                                   |- true node: ['battery damage'] -> apply comprehensive coverage for battery replacement
+                                   |  |- false node: ['fire-related damage'] -> adjust payout for ev-specific parts
+                                   |- false node: ['vehicle total loss'] -> adjust payout for aftermarket parts
+                                      |- true node: ['modified aftermarket parts'] -> adjust payout for aftermarket parts
+                                      |  |- false node: ['flood damage'] -> verify flood coverage endorsement
+                                      |- false node: ['pre-existing damage'] -> exclude pre-existing damage from payout
+                                         |- true node: ['damage during off-road use'] -> exclude pre-existing damage
+                                         |- false node: ['policy exclusion'] -> deny claim
+                                            |- true node: ['racing-related accident'] -> deny claim
+                                            |  |- false node: ['driver intoxicated'] -> deny claim
+                                            |- false node: ['driver intoxicated'] -> deny claim
+                                               |- false node: ['suspicious claim'] -> flag for fraud review or request additional documents
+                                                  |- true node: ['inflated repair costs'] -> request secondary inspection
+                                                  |- false node: ['driver under 18'] -> adjust payout based on minor driver rules
+                                                     |- false node: ['damage during off-road use'] -> apply off-road coverage
+                                                        |- true node: ['no off-road coverage'] -> deny claim
+                                                        |- false node: ['claim filed over 60 days'] -> flag for fraud review
+                                                           |- true node: ['multiple vehicles', 'at-fault', 'major damage'] -> adjust payout for each vehicle involved
+                                                           |  |- false node: ['multiple vehicles', 'not at-fault', 'major damage'] -> apply third-party insurance for each vehicle
+                                                           |- false node: ['claim exceeds $15', '000', 'medical expenses'] -> flag for supervisor review
+                                                              |- false node: ['theft', 'vehicle recovered with damage'] -> apply comprehensive coverage for repairs
+                                                                 |- false node: ['flood damage'] -> verify flood coverage endorsement
+                                                                    |- true node: ['uninsured third party'] -> deny claim under third-party coverage

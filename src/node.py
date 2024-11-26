@@ -46,7 +46,7 @@ class Node:
       else:
         self.false_node.add_node(conditions, result)
 
-  def print_subtree(self, prefix: str = "   |"):
+  def print_subtree(self, prefix: str = "  |"):
     rule_conditions_str = "TRUE" if not self.rule_conditions else self.rule_conditions
     print(f"{rule_conditions_str} -> {self.rule_result}")
       
@@ -71,16 +71,22 @@ class Node:
       file.write(f"{rule_conditions_str} -> {self.rule_result}\n")
       
       # Update the prefix for child nodes
-      child_prefix = prefix + "  |"
-      if self.true_node is not None:
+      if self.true_node != None:
+          prefix1 = prefix + "  |"
           # Write the "true node" label and recursively save the true node
-          file.write(f"{child_prefix}- true node: ")
-          self.true_node.save_subtree(file, child_prefix)
+          file.write(f"{prefix1}- true node: ")
+          if self.false_node == None:
+            prefix2 = prefix + "   "
+          else:
+            prefix2 = prefix + "  |"
+          self.true_node.save_subtree(file, prefix2)
       
-      if self.false_node is not None:
+      if self.false_node != None:
+          prefix1 = prefix + "  |"
           # Write the "false node" label and recursively save the false node
-          file.write(f"{child_prefix}- false node: ")
-          self.false_node.save_subtree(file, child_prefix)
+          file.write(f"{prefix1}- false node: ")
+          prefix2 = prefix + "   "
+          self.false_node.save_subtree(file, prefix2)
           
   def to_json(self):
     json_dict = {}
